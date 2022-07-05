@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "sail",
+    "password": "password",
+    "database": "database",
+    "host": "db",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "sail",
+    "password": "password",
+    "database": "database",
+    "host": "db",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "sail",
+    "password": "password",
+    "database": "database",
+    "host": "db",
+    "dialect": "mysql"
+  }
+}

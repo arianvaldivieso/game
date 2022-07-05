@@ -1,30 +1,39 @@
 "use strict";
-
-var jwt = require('jsonwebtoken');
-
-const pool = require("./../db.js");
-
+var moment = require('moment');
+const { sign } = require('./../utils/jwt.js');
+const User = require("../models/user.js");
 
 
-function login(req, res) {
+async function login(req, res) {
 
+  let whereQuery = {
+    username: req.body.username,
+  }
 
-  const token = jwt.sign({ username: req.body.email }, '123456789');
-
-  res.status(200).json({
-    token: token
+  let user = await User.findAll({
+    where: whereQuery,
   });
-  /**
-    pool.query(`select orders.*,User.Name as user from orders inner join User on User.IdUser = orders.IdUser where orders.IsDeleted != 1`,(err,results) => {
-        if (err) throw err;
-        res.status(200).json({
-            status: "success",
-            message: 'Order lists',
-            data: results
-        });
+
+
+  if (user.length) {
+
+    /** Update last_date login */
+
+    await User.update({ last_date: moment().tz('America/Caracas').format() }, {
+      where: whereQuery
     });
 
-    */
+    const token = sign(user[0].username);
+
+    res.status(200).json({
+      token: token,
+      data: user[0]
+    });
+  }else{
+    res.status(404).json({
+      message: 'user not found ',
+    });
+  }
 }
 
 module.exports = {
