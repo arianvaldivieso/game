@@ -20,12 +20,12 @@ async function login(req, res) {
 
     /** Update last_date login */
     const date = moment().tz('America/Caracas').format();
-    /**
+    
     await User.update({ last_date: date }, {
       where: whereQuery
     });
 
-     */
+     
 
     user.last_date = date;
 
