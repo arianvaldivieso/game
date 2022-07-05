@@ -25,8 +25,7 @@ async function login(req, res) {
       where: whereQuery
     });
 
-     
-
+    
     user.last_date = date;
 
     await CreditExpense.destroy({
