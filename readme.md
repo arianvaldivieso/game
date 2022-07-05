@@ -1,6 +1,9 @@
 
 # Instrucciones
 
+
+Ejecutar ./start.sh para levantar todo el entorno
+
 Debes logearte con el username
 luego cada que pase un minuto se te otorgara un credito.
 
