@@ -1,0 +1,40 @@
+<div id="tombola" class="mt-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-4">
+        <label for="">Selecciona a un usuario</label>
+        <select [ngModel]="selectUser" (ngModelChange)="onChangeUser($event)" class="form-select" aria-label="Default select example">
+          <option [value]="user.username" *ngFor="let user of users">{{user.username}}</option>
+        </select>
+
+        <div class="card mt-2" *ngIf="user">
+          <div class="card-body">
+            <h5 class="card-title">Bienvenido {{user.username}}</h5>
+            <p class="card-text">Tienes {{creditsTotal}} Creditos</p>
+            <input type="number" min="1" max="2" class="form-control mt-1 mb-1" [(ngModel)]="n">
+            <a href="#" (click)="bet()" class="btn btn-primary">Apostar</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-8" *ngIf="rewards">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Recompensas</th>
+              <th scope="col">Creditos gastados</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let reward of rewards">
+              <th scope="row">{{reward.id}}</th>
+              <td>{{reward.reward}}</td>
+              <td>{{reward.credits}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

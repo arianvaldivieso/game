@@ -8,7 +8,7 @@ function calculatePercentage(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-function calculateRewards(c,user_id) {
+async function calculateRewards(c,user_id) {
   const rewardPercentage = calculatePercentage(1, 10);
   let reward = "";
 
@@ -24,22 +24,26 @@ function calculateRewards(c,user_id) {
     reward = "pineapple";
   }
 
-  CreditExpense.create({
+  const expense = await CreditExpense.create({
     credits: c,
     reward: reward,
     user_id: user_id
   });
 
-  return reward;
+  return expense;
 }
 
 async function run(req, res) {
   const c = req.body.c;
 
-  if (c < 1 && c > 2) {
-    res.status(422).json({
+  console.log('Creditos',c)
+
+  if (c < 1 || c > 2) {
+    
+    return res.status(422).json({
       message: "Solo puedes apostar entre 1 y 2 creditos",
     });
+    return true;
   }
 
   const user = await User.findOne({
@@ -50,7 +54,7 @@ async function run(req, res) {
 
   if (await getCredits(user) >= c) {
     res.status(200).json({
-      reward: calculateRewards(c,user.id),
+      reward: await calculateRewards(c,user.id),
     });
   } else {
     res.status(422).json({

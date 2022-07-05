@@ -16,11 +16,13 @@ app.use(express.urlencoded()); //Parse URL-encoded bodies
 const auth = require('./routes/auth');
 const credits = require('./routes/point');
 const game = require('./routes/game');
+const user = require('./routes/user');
 
 
 app.use('/api/v1/auth', auth);
 app.use('/api/v1/credits', credits);
 app.use('/api/v1/game', game);
+app.use('/api/v1/users', user);
 
 
 app.listen(port, () => {
